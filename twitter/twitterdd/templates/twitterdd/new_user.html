@@ -1,0 +1,52 @@
+{% extends "twitterdd/base.html" %}
+{% block content %}
+
+	<div class="container">
+		<div class="jumbotron">
+			{% if edit %}
+		    <h2 class="text-center">Hello {{logged_in_user}}, here is your user page. You may edit your information</h2>
+		    {% else %}
+		    <h1 class="text-center">Welcome New User!</h1>
+		    {% endif %}
+			<div class="container">
+				<form action="/createuser" method="post">
+				{% csrf_token %}
+					<br>
+					<br>
+					<div class="row">
+						<div class="col-md-6">
+								{% if not edit %}
+								<p>Username:   &nbsp<input type="text" name="username" pattern="\w{3,20}" {% if not edit %} required {% endif %} placeholder="CoolKid123"></p>
+								{% endif %}
+								<p>First Name: <input type="text" {% if not edit %} required {% endif %} name="firstname" placeholder="Cool"></p>
+								<p>Last Name:  <input type="text" {% if not edit %} required {% endif %} name="lastname" placeholder="Kid"></p>
+						</div>
+						<div class="col-md-6">
+								<p>Email:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" {% if not edit %} required {% endif %} name="email" placeholder="Cool@Kid.com"></p>
+								<p>Password:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="password" {% if not edit %} required {% endif %} name="password" pattern="(?=.*[0-9])(?=.*[a-zA-Z])[A-Za-z0-9_]{5,15}"></p>
+								<p>Retype Password:<input type="password" {% if not edit %} required {% endif %} name="password" pattern="(?=.*[0-9])(?=.*[a-zA-Z])[A-Za-z0-9]{5,15}"></p>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="row">
+								<a href="/" class="btn btn-info">Back Home</a>
+								{% if edit %}
+								<a href="/user/delete" class="btn btn-danger" value="Delete Account">Delete Account</a>
+								<input type="hidden" name="username" value="{{logged_in_user}}">
+								<input type="submit" class="btn btn-success" value="Change My Info!">
+								{% else %}
+								<input type="submit" class="btn btn-success" value="Go!">
+								{% endif %}
+							</div>
+						</div>
+						<div class="col-md-6">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+{% endblock %}

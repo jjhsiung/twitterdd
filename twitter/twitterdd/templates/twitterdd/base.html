@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoorDash Twitter</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.css">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+
+
+
+    <!-- Hover animation for thumbnails -->
+    <link rel="stylesheet" type="text/css" href="/static/css/animate.css-master/animate.min.css">
+    <style type="text/css">
+    /* reguired extra Styles */
+    #thumbgrid .thumbnail {
+        position:relative;
+        overflow:hidden;
+    }
+
+    .caption {
+        position:absolute;
+        top:0;
+        right:0;
+        background:rgba(66, 139, 202, 0.75);
+        width:100%;
+        height:100%;
+        padding:2%;
+        display: none;
+        text-align:center;
+        color:#fff !important;
+        z-index:2;
+    }
+    </style>
+
+    
+
+
+  </head>
+  <body>
+
+  	<div class="navbar navbar-inverse navbar-static-top">
+  		<div class="container">
+        <a href="/" data-toggle="modal" class="navbar-brand">Twitter</a>
+
+  			<button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+  				<span class="icon-bar"></span>
+  				<span class="icon-bar"></span>
+  				<span class="icon-bar"></span>
+  			</button>
+
+  			<div class="collapse navbar-collapse navHeaderCollapse">
+  				<ul class="nav navbar-nav navbar-right">
+  					{% if login %}
+            <li><a href="/userpage/{{logged_in_user}}">Home</a></li>
+            <li><a href="#new_tweet" data-toggle="modal">New Tweet</a></li>
+            <li><a href="/logout">Logout</a></l>
+            {% else %}
+            <li><a href="/">Home</a></li>
+            <li><a href="#login" data-toggle="modal">Login</a></li>
+            {% endif %}
+  				</ul>
+  			</div>
+
+  		</div>
+  	</div>
+
+  	<div class="center">
+
+      {% block content %}{% endblock %}
+    
+  	</div>
+
+    <div class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <p class="navbar-text pull-left">Twitter Team</p>
+        <a href="#email" data-toggle="modal" class="navbar-btn btn-info btn pull-right">Contact Us!</a>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap-select.js"></script>
+
+    <div class="modal fade" id="new_tweet" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="text-center">Compose new Tweet</h4>
+          </div>
+          <form action="/newtweet" method="post">
+          {% csrf_token %}
+            <div class="modal-body">
+                <textarea style="width:100%" name=tweet_text></textarea>
+            </div>
+            <div class="modal-footer">
+              <h3 class="text-center">
+              <a href="#" class="btn btn-primary" data-dismiss="modal">Cancel</a>
+              <input class="btn btn-success" type=submit value=Tweet>
+            </h3>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="email" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4>Contact Group 6</h4>
+          </div>
+          <div class="modal-body">
+            <p>Shoot us an email!</p>
+            <textarea class="form-control" rows="3"></textarea>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn btn-default" data-dismiss="modal">Send*</a>
+            <a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="login" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="text-center">Login</h4>
+          </div>
+          <form action="/" method="post">
+          {% csrf_token %}
+            <div class="modal-body">
+                <input type="hidden" id='intended_dest' name=intended_dest value="">
+                <p>username: <input type=text name=username></p>
+                <p>password: <input type=password name=password></p>
+            </div>
+            <div class="modal-footer">
+              <h3 class="text-center">
+              <input class="btn btn-success" type=submit value=Login>
+              <a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
+            </h3>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hover animation for thumbnails -->
+    <script type="text/javascript">
+        $(document).ready(function(){ 
+            $( ".thumbnail" )
+            .mouseenter(function() {
+              $(this).find('.caption').removeClass("flipOutX").addClass("flipInX").show();
+            })
+            .mouseleave(function() {
+              $(this).find('.caption').removeClass("flipInX").addClass("flipOutX");
+            });  
+
+            $("#intended_dest").val(document.URL);
+
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+.margin {
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.footer {
+	left:0; 
+	position:fixed; 
+	text-align:left; 
+	bottom:0; 
+	width:100%;"
+}
+
+td, tr {
+	border: 1px solid black;
+}
+
+.center {
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+}

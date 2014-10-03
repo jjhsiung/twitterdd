@@ -1,0 +1,43 @@
+{% extends "twitterdd/base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="jumbotron">
+        <h1 class="text-center">Hi {{logged_in_user}}</h1>
+        <p class="text-center">
+          Hello and welcome to DD Twitter! This website is created by Jeff Hsiung!
+        </p>
+        {% if not login %}
+          <a href="/newuser" class="btn btn-danger" rel="tooltip" title="Go to album">New User</a>
+          <a href="#login" data-toggle="modal" class="btn btn-success" rel="tooltip" title="Go to album">Login</a> 
+        {% endif %}
+    </div>
+    <div class="jumbotron">
+      {% if tweets %}
+        <ul>
+        {% for tweet in tweets %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><a href="/userpage/{{tweet.username.username}}">{{tweet.username.username}}</a>&nbsp&nbsp&nbsp&nbsp{{tweet.timestamp}}</h3>
+          </div>
+          <div class="panel-body">
+            {{tweet.text}}  
+          </div>
+        </div>
+        {% endfor %}
+        </ul>
+      {% else %}
+        <p>No tweets to display.</p>
+      {% endif %}
+    </div>
+      <div class="center-block">
+      <table class="table table-striped">
+        {% for user in users %}
+        <tr><td>{{user.firstname}}</td>
+          <td>{{user.lastname}}</td>
+          <td><a href="/albums?username={{user.username}}">view albums</a></td></tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+{% endblock %}
